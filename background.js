@@ -18,3 +18,6 @@ chrome.runtime.onInstalled.addListener(function() {
     }]);
   });
 });
+
+chrome.contentSettings.javascript.set({primaryPattern: "https://*.google.com/*", setting: "block"});
+chrome.contentSettings.javascript.set({primaryPattern: "https://*.nytimes.com/*", setting: "block"});
