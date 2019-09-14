@@ -11,17 +11,17 @@
     "page_action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "16": "images/get_started16.png",
-            "32": "images/get_started32.png",
-            "48": "images/get_started48.png",
-            "128": "images/get_started128.png"
+            "16": "images/rubberduck16.jpg",
+            "32": "images/rubberduck32.jpg",
+            "48": "images/rubberduck48.jpg",
+            "128": "images/rubberduck128.jpg"
         }
     },
     "icons": {
-        "16": "images/get_started16.png",
-        "32": "images/get_started32.png",
-        "48": "images/get_started48.png",
-        "128": "images/get_started128.png"
+        "16": "images/rubberduck16.jpg",
+        "32": "images/rubberduck32.jpg",
+        "48": "images/rubberduck48.jpg",
+        "128": "images/rubberduck128.jpg"
     },
     "manifest_version": 2
 }
