@@ -19,5 +19,5 @@ chrome.runtime.onMessage.addListener(
 
 chrome.storage.sync.get('urlBlacklist', function(result) {
   let list = result.urlBlacklist || [];
-  list.forEach(async element => await chrome.contentSettings.javascript.set({primaryPattern: element, setting: "block"}));
+  list.forEach(element => chrome.contentSettings.javascript.set({primaryPattern: element, setting: "block"}));
 });

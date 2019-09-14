@@ -1,7 +1,7 @@
 {
-    "name": "Getting Started Example",
+    "name": "AdBlockerBlockerBlocker",
     "version": "1.0",
-    "description": "Build an Extension!",
+    "description": "Blacklist certain websites to block javascript from running",
     "permissions": ["activeTab", "contentSettings", "declarativeContent", "storage"],
     "background": {
         "scripts": ["background.js"],
