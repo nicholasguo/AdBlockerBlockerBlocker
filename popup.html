@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="./jquery-3.4.0.min.js"></script>
     <style>
       button {
         height: 30px;
@@ -10,8 +11,9 @@
     </style>
   </head>
   <body>
-    <button id="changeColor"></button>
-    <img src="images/rubberduck.jpg">
+    <input type="text" id="input" placeholder="Enter website url"></input>
+    <input type="submit" id="submitter"></input>
+    <ul id="urlBlacklist"></ul>
     <script src="popup.js"></script>
   </body>
 </html>

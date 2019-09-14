@@ -4,20 +4,21 @@
 
 'use strict';
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log("The color is green.");
-  });
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {hostEquals: 'developer.chrome.com'},
-      })
-      ],
-          actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.changeStatus === "block") {
+      sendResponse({message: "blocked"});
+      chrome.contentSettings.javascript.set({primaryPattern: request.url, setting: "block"});
+    } else if (request.changeStatus === "unblock") {
+      sendResponse({message: "unblocked"});
+      chrome.contentSettings.javascript.set({primaryPattern: request.url, setting: "allow"});
+    }
+  }
+)
+
+chrome.storage.sync.get('urlBlacklist', function(result) {
+  let list = result.urlBlacklist || [];
+  list.forEach(element => {
+    chrome.contentSettings.javascript.set({primaryPattern: element, setting: "block"});
   });
 });
-
-chrome.contentSettings.javascript.set({primaryPattern: "https://*.google.com/*", setting: "block"});
-chrome.contentSettings.javascript.set({primaryPattern: "https://*.nytimes.com/*", setting: "block"});
