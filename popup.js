@@ -21,9 +21,13 @@ updateList = () => {
         $('#urlBlacklist').empty();
         list.forEach(element => {
             let url = element.substring(10, element.length - 2);
+            let x = document.createElement("BUTTON");
+            x.classList.add("delete");
+            x.innerHTML = "&times;";
+            x.onclick = removeItem(element);
             let node = document.createElement("li");
             node.appendChild(document.createTextNode(url));
-            node.onclick = removeItem(element);
+            node.appendChild(x);
             $('#urlBlacklist').append(node);
         });
     });
