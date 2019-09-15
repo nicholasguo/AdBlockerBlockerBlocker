@@ -1,3 +1,5 @@
+const defaults = ["nytimes.com"];
+
 $(document).ready(function() {
     updateList();
 });
@@ -11,7 +13,7 @@ $('#submitter').on("click", function() {
     $('#input').val("");
     chrome.storage.sync.get('urlBlacklist', function(result) {
         console.log(result)
-        let curUrlList = result.urlBlacklist || [];
+        let curUrlList = result.urlBlacklist;
         if (curUrlList.indexOf(newUrl) === -1) {
             curUrlList.push(newUrl);
             curUrlList.sort();
@@ -24,8 +26,12 @@ $('#submitter').on("click", function() {
 
 updateList = () => {
     chrome.storage.sync.get('urlBlacklist', function(result) {
-        let list = result.urlBlacklist || [];
+        let list = result.urlBlacklist;
         $('#urlBlacklist').empty();
+        if (!Array.isArray(list)) {
+            list = defaults;
+            chrome.storage.sync.set({'urlBlacklist': list});
+        }
         list.forEach(element => {
             let x = document.createElement("BUTTON");
             x.classList.add("delete");

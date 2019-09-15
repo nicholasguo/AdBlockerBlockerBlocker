@@ -4,6 +4,19 @@
 
 'use strict';
 
+// import defaults from "./defaults.js";
+
+const defaults = [
+  "bloomberg.com",
+  "bostonglobe.com",
+  "economist.com", 
+  "forbes.com",
+  "medium.com",
+  "newyorker.com",
+  "nytimes.com", 
+  "washingtonpost.com", 
+];
+
 const block = (url) => { 
   chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "block"}); 
   chrome.contentSettings.javascript.set({primaryPattern: httpIfy(url), setting: "block"}); 
@@ -24,7 +37,7 @@ chrome.runtime.onMessage.addListener(
 );
 
 chrome.storage.sync.get('urlBlacklist', function(result) {
-  let list = result.urlBlacklist || [];
+  let list = result.urlBlacklist || defaults;
   list.forEach(element => { block(element) });
 });
 
