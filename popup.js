@@ -13,11 +13,7 @@ $(document).ready(function() {
     updateList();
 });
 
-$('#submitter').on("click", function() {
-    let newUrl = $('#input').val().trim();
-    if (newUrl === "") {
-        return;
-    }
+addUrl = (newUrl) => {
     chrome.runtime.sendMessage({message: "block", url: newUrl});
     $('#input').val("");
     chrome.storage.sync.get('urlBlacklist', function(result) {
@@ -29,6 +25,25 @@ $('#submitter').on("click", function() {
             chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
                 updateList();
             });
+        }
+    });
+}
+
+$('#submitter').on("click", function() {
+    let newUrl = $('#input').val().trim();
+    if (newUrl === "") {
+        return;
+    }
+    addUrl(newUrl);
+});
+
+$('#blacklist').on("click", function() {
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+        var curUrl = tabs[0].url;
+        if (curUrl) {
+            let i = curUrl.lastIndexOf(".");
+
+            addUrl(curUrl);
         }
     });
 });
