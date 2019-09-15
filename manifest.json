@@ -11,17 +11,11 @@
     "browser_action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "16": "images/rubberduck16.jpg",
-            "32": "images/rubberduck32.jpg",
-            "48": "images/rubberduck48.jpg",
-            "128": "images/rubberduck128.jpg"
+            "300": "images/block.png"
         }
     },
     "icons": {
-        "16": "images/rubberduck16.jpg",
-        "32": "images/rubberduck32.jpg",
-        "48": "images/rubberduck48.jpg",
-        "128": "images/rubberduck128.jpg"
+        "300": "images/block.png"
     },
     "manifest_version": 2
 }
