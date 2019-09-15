@@ -1,4 +1,13 @@
-const defaults = ["nytimes.com"];
+const defaults = [
+    "bloomberg.com",
+    "bostonglobe.com",
+    "economist.com", 
+    "forbes.com",
+    "medium.com",
+    "newyorker.com",
+    "nytimes.com", 
+    "washingtonpost.com", 
+  ];
 
 $(document).ready(function() {
     updateList();
