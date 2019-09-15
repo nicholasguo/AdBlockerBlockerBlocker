@@ -36,12 +36,26 @@
         font-size: 15px;
         color: #141B41;
       }
-
+      .status-circle {
+        width: 20px;
+        height: 20px;
+        margin-top: 20px;
+        border-radius: 10px;
+        background-color: lightcoral;
+      }
+      .active-circle {
+        background-color: lightgreen;
+      }
       .text-values {
         font-size: 20px;
         color: #141B41;
         text-align: center;
         margin: 16px 16px 0px 16px;
+      }
+      .title {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
       }
 
       .title-values {
@@ -73,7 +87,10 @@
     </style>
   </head>
   <body>
-    <p class="title-values">Ad Blocker Blocker Blocker</p>
+    <div class="title">
+      <p class="title-values">Ad Blocker Blocker Blocker</p>
+      <div class="status-circle" id="status-circle"></div>
+    </div>
     <input type="text" id="input" placeholder="Enter website url to blacklist"></input>
     <input type="submit" id="submitter"></input>
     <p class="text-values">Blacklisted websites</p>
