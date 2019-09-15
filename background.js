@@ -48,15 +48,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   }
   chrome.contentSettings.javascript.get({primaryUrl: url}, function(jsSetting) {
     if (jsSetting.setting === "block") {
-      chrome.browserAction.setIcon({
-        path: "images/get_started32.png",
-        tabId: tabId,
-      });
+      chrome.browserAction.setBadgeText({text: "ON", tabId: tabId});
     } else {
-      chrome.browserAction.setIcon({
-        path: "images/rubberduck32.jpg",
-        tabId: tabId,
-      });
+      chrome.browserAction.setBadgeText({text: "", tabId: tabId});
     }
   });
 });
