@@ -19,7 +19,8 @@ chrome.runtime.onMessage.addListener(
 
 chrome.storage.sync.get('urlBlacklist', function(result) {
   let list = result.urlBlacklist || [];
-  list.forEach(element => chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(element), secondaryPattern: httpIfy(element), setting: "block"}));
+  list.forEach(element => chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(element), setting: "block"}));
+  list.forEach(element => chrome.contentSettings.javascript.set({primaryPattern: httpIfy(element), setting: "block"}));
 });
 
 const httpsIfy = (url) => "https://*." + url + "/*";
