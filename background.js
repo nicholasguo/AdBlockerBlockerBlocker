@@ -10,7 +10,7 @@ const block = (url) => {
 };
 const allow = (url) => { 
   chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "allow"}); 
-  chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "allow"}); 
+  chrome.contentSettings.javascript.set({primaryPattern: httpIfy(url), setting: "allow"}); 
 };
 
 chrome.runtime.onMessage.addListener(
@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(
     if (request.message === "block")
       block(request.url);
     else if (request.message === "allow")
-      block(request.url);
+      allow(request.url);
     sendResponse({message: request.message + " echo"});
   }
 );
