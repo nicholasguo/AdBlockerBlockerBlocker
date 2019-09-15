@@ -24,18 +24,28 @@ $('#submitter').on("click", function() {
 
 updateList = () => {
     chrome.storage.sync.get('urlBlacklist', function(result) {
-        let list = result.urlBlacklist || [];
-        $('#urlBlacklist').empty();
-        list.forEach(element => {
-            let x = document.createElement("BUTTON");
-            x.classList.add("delete");
-            x.innerHTML = "&times;";
-            x.onclick = removeItem(element);
-            let node = document.createElement("div");
-            node.classList.add("urlListItem")
-            node.appendChild(document.createTextNode(element));
-            node.appendChild(x);
-            $('#urlBlacklist').append(node);
+        chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+            let url = tabs[0].url;
+            let list = result.urlBlacklist || [];
+            $('#urlBlacklist').empty();
+            list.forEach(element => {
+                let x = document.createElement("BUTTON");
+                x.classList.add("delete");
+                x.innerHTML = "&times;";
+                x.onclick = removeItem(element);
+                let node = document.createElement("div");
+                node.classList.add("urlListItem")
+                node.appendChild(document.createTextNode(element));
+                node.appendChild(x);
+                $('#urlBlacklist').append(node);
+            });
+            chrome.contentSettings.javascript.get({primaryUrl: url}, function(jsSetting) {
+                if (jsSetting.setting === "block") {
+                    $('#status-circle')[0].classList.add("active-circle");
+                } else {
+                    $('#status-circle')[0].classList.remove("active-circle");
+                }
+            });
         });
     });
 }
@@ -50,3 +60,7 @@ removeItem = (url) => () => {
         });
     });
 }
+
+const httpsIfy = (url) => "https://*." + url + "/*";
+
+const httpIfy = (url) => "http://*." + url + "/*";

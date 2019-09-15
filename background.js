@@ -4,23 +4,28 @@
 
 'use strict';
 
-//let block = async (url) => {await chrome.contentSettings.javascript.set({primaryPattern: url, setting: "block"})};
-//let allow = async (url) => {await chrome.contentSettings.javascript.set({primaryPattern: url, setting: "allow"})};
+const block = (url) => { 
+  chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "block"}); 
+  chrome.contentSettings.javascript.set({primaryPattern: httpIfy(url), setting: "block"}); 
+};
+const allow = (url) => { 
+  chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "allow"}); 
+  chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "allow"}); 
+};
 
 chrome.runtime.onMessage.addListener(
   async (request, sender, sendResponse) => {
     if (request.message === "block")
-      await chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(request.url), secondaryPattern: httpIfy(request.url), setting: "block"});
+      block(request.url);
     else if (request.message === "allow")
-      await chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(request.url), secondaryPattern: httpIfy(request.url), setting: "allow"});
+      block(request.url);
     sendResponse({message: request.message + " echo"});
   }
 );
 
 chrome.storage.sync.get('urlBlacklist', function(result) {
   let list = result.urlBlacklist || [];
-  list.forEach(element => chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(element), setting: "block"}));
-  list.forEach(element => chrome.contentSettings.javascript.set({primaryPattern: httpIfy(element), setting: "block"}));
+  list.forEach(element => { block(element) });
 });
 
 const httpsIfy = (url) => "https://*." + url + "/*";
