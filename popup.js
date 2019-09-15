@@ -13,7 +13,7 @@ $(document).ready(function() {
     updateList();
 });
 
-addUrl = (newUrl) => {
+addUrl = (newUrl, callback) => {
     chrome.runtime.sendMessage({message: "block", url: newUrl});
     $('#input').val("");
     chrome.storage.sync.get('urlBlacklist', function(result) {
@@ -23,7 +23,7 @@ addUrl = (newUrl) => {
             curUrlList.push(newUrl);
             curUrlList.sort();
             chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
-                updateList();
+                callback();
             });
         }
     });
@@ -34,7 +34,9 @@ $('#submitter').on("click", function() {
     if (newUrl === "") {
         return;
     }
-    addUrl(newUrl);
+    addUrl(newUrl, function() {
+        updateList();
+    });
 });
 
 $('#blacklist').on("click", function() {
@@ -42,8 +44,21 @@ $('#blacklist').on("click", function() {
         var curUrl = tabs[0].url;
         if (curUrl) {
             let i = curUrl.lastIndexOf(".");
-
-            addUrl(curUrl);
+            let j = i;
+            while (j < curUrl.length && curUrl.charAt(j) !== '/' ) {
+                j += 1;
+            }
+            let k = i - 1;
+            while (k >= 0 && curUrl.charAt(k) != '.' && curUrl.charAt(k) != '/') {
+                k -= 1;
+            }
+            addUrl(curUrl.substring(k + 1, j), function() {
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                    chrome.tabs.update(tabs[0].id, {url: tabs[0].url}, function() {
+                        updateList();
+                    });
+                });
+            });
         }
     });
 });
