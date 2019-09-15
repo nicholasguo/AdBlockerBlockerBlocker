@@ -9,7 +9,7 @@
         justify-content: center;
         align-items: center;
       }
-      input[type=button], input[type=submit], input[type=reset] {
+      input[type=button], input[type=submit], input[type=reset]{
         border: 2px solid #7180B9;
         color: #7180B9;
         text-decoration: none;
@@ -18,8 +18,10 @@
         cursor: pointer;
         font-size: 15px;
         border-radius: 4px;
+        margin-top: 16px;
+        margin-bottom: 16px;
       }
-      input[type=submit]:hover {
+      input[type=submit]:hover{
         border: 2px solid #141B41;
         color:white;
         background-color: #141B41;
@@ -30,6 +32,30 @@
         font-size: 15px;
         border-radius: 4px;
       }
+      
+      button {
+        border: 2px solid #7180B9;
+        color: #7180B9;
+        text-decoration: none;
+        padding: 10px;
+        width: 150px;
+        cursor: pointer;
+        font-size: 15px;
+        border-radius: 4px;
+      }
+
+      button:hover {
+        border: 2px solid #141B41;
+        color:white;
+        background-color: #141B41;
+        text-decoration: none;
+        padding: 10px;
+        width: 150px;
+        cursor: pointer;
+        font-size: 15px;
+        border-radius: 4px;
+      }
+
       input[type=text] {
         width: 400px;
         border-radius: 4px;
@@ -90,6 +116,12 @@
         margin: 2px;
       }
 
+      .input-field {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
       #urlBlacklist {
         display: flex;
         flex-direction: column;
@@ -101,12 +133,15 @@
     </style>
   </head>
   <body>
+    <div style="width: 500px"></div>
     <div class="title">
       <p class="title-values">Ad Blocker Blocker Blocker</p>
       <div class="status-circle" id="status-circle"></div>
     </div>
-    <input type="text" id="input" placeholder="Enter website url to blacklist"></input>
-    <input type="submit" id="submitter"></input>
+    <div class="input-field">
+      <input type="text" id="input" placeholder="Enter website url to blacklist"></input>
+      <input type="submit" id="submitter" style="float: right"></input>
+    </div>
     <button id="blacklist">Blacklist This Site</button>
     <p class="text-values">Blacklisted websites</p>
     <div id="urlBlacklist" ></div>
