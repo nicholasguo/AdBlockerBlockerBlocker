@@ -3,13 +3,18 @@
   <head>
     <script src="./jquery-3.4.0.min.js"></script>
     <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
       input[type=button], input[type=submit], input[type=reset] {
         border: 2px solid #7180B9;
         color: #7180B9;
         text-decoration: none;
         padding: 8px;
         width: 100px;
-        margin-left: 210px;
         cursor: pointer;
         font-size: 15px;
         border-radius: 4px;
@@ -18,16 +23,16 @@
         border: 2px solid #141B41;
         color:white;
         background-color: #141B41;
+        background: linear-gradient(90deg, rgba(227,208,63,1) 0%, rgba(191,155,92,1) 100%);
         text-decoration: none;
         padding: 8px;
         width: 100px;
-        margin-left: 210px;
         cursor: pointer;
         font-size: 15px;
         border-radius: 4px;
       }
       input[type=text] {
-        width: 500px;
+        width: 400px;
         border-radius: 4px;
         padding: 12px 20px;
         margin: 16px;
@@ -56,6 +61,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: center;
       }
 
       .title-values {
@@ -72,10 +78,10 @@
         text-align: center;
       }
 
-      li {
+      .urlListItem {
         font-size: 15px;
         color: #141B41;
-        margin: 16px;
+        margin-left: 20px;
       }
 
       .delete {
@@ -83,6 +89,14 @@
         border: none;
         color: #141B41;
         margin: 2px;
+      }
+
+      #urlBlacklist {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        max-height: 300px;
+        overflow-y: scroll;
       }
     </style>
   </head>
@@ -94,7 +108,7 @@
     <input type="text" id="input" placeholder="Enter website url to blacklist"></input>
     <input type="submit" id="submitter"></input>
     <p class="text-values">Blacklisted websites</p>
-    <ul id="urlBlacklist"></ul>
+    <div id="urlBlacklist" ></div>
     <script src="popup.js"></script>
   </body>
 </html>

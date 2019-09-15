@@ -4,8 +4,14 @@
 
 'use strict';
 
-const block = async (url) => { await chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), secondaryPattern: httpIfy(url), setting: "block"}); };
-const allow = async (url) => { await chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), secondaryPattern: httpIfy(url), setting: "allow"}); };
+const block = (url) => { 
+  chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "block"}); 
+  chrome.contentSettings.javascript.set({primaryPattern: httpIfy(url), setting: "block"}); 
+};
+const allow = (url) => { 
+  chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "allow"}); 
+  chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "allow"}); 
+};
 
 chrome.runtime.onMessage.addListener(
   async (request, sender, sendResponse) => {

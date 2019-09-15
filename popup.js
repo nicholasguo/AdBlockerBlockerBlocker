@@ -3,13 +3,18 @@ $(document).ready(function() {
 });
 
 $('#submitter').on("click", function() {
-    let newUrl = $('#input').val();
+    let newUrl = $('#input').val().trim();
+    if (newUrl === "") {
+        return;
+    }
     chrome.runtime.sendMessage({message: "block", url: newUrl});
     $('#input').val("");
     chrome.storage.sync.get('urlBlacklist', function(result) {
+        console.log(result)
         let curUrlList = result.urlBlacklist || [];
         if (curUrlList.indexOf(newUrl) === -1) {
             curUrlList.push(newUrl);
+            curUrlList.sort();
             chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
                 updateList();
             });
@@ -26,7 +31,8 @@ updateList = () => {
             x.classList.add("delete");
             x.innerHTML = "&times;";
             x.onclick = removeItem(element);
-            let node = document.createElement("li");
+            let node = document.createElement("div");
+            node.classList.add("urlListItem")
             node.appendChild(document.createTextNode(element));
             node.appendChild(x);
             $('#urlBlacklist').append(node);
