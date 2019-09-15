@@ -3,16 +3,66 @@
   <head>
     <script src="./jquery-3.4.0.min.js"></script>
     <style>
-      button {
-        height: 30px;
-        width: 30px;
-        outline: none;
+      input[type=button], input[type=submit], input[type=reset] {
+        border: 2px solid #7180B9;
+        color: #7180B9;
+        text-decoration: none;
+        padding: 8px;
+        width: 100px;
+        margin-left: 210px;
+        cursor: pointer;
+        font-size: 15px;
+        border-radius: 4px;
+      }
+      input[type=submit]:hover {
+        border: 2px solid #141B41;
+        color:white;
+        background-color: #141B41;
+        text-decoration: none;
+        padding: 8px;
+        width: 100px;
+        margin-left: 210px;
+        cursor: pointer;
+        font-size: 15px;
+        border-radius: 4px;
+      }
+      input[type=text] {
+        width: 500px;
+        border-radius: 4px;
+        padding: 12px 20px;
+        margin: 16px;
+        box-sizing: border-box;
+        border: 2px solid #7180B9;
+        font-size: 15px;
+        color: #141B41;
+      }
+
+      .text-values {
+        font-size: 20px;
+        color: #141B41;
+        text-align: center;
+        margin: 16px;
+      }
+
+      .description {
+        font-size: 10px;
+        color: #141B41;
+        margin: 0px;
+        text-align: center;
+      }
+
+      li {
+        font-size: 15px;
+        color: #141B41;
+        margin: 16px;
       }
     </style>
   </head>
   <body>
-    <input type="text" id="input" placeholder="Enter website url"></input>
+    <input type="text" id="input" placeholder="Enter website url to blacklist"></input>
     <input type="submit" id="submitter"></input>
+    <p class="text-values">Blacklisted websites</p>
+    <p class="description">Click the website to remove</p>
     <ul id="urlBlacklist"></ul>
     <script src="popup.js"></script>
   </body>

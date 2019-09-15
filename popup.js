@@ -20,8 +20,9 @@ updateList = () => {
         let list = result.urlBlacklist || [];
         $('#urlBlacklist').empty();
         list.forEach(element => {
+            let url = element.substring(10, element.length - 2);
             let node = document.createElement("li");
-            node.appendChild(document.createTextNode(element));
+            node.appendChild(document.createTextNode(url));
             node.onclick = removeItem(element);
             $('#urlBlacklist').append(node);
         });
