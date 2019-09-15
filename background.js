@@ -22,6 +22,26 @@ chrome.storage.sync.get('urlBlacklist', function(result) {
   list.forEach(element => { block(element) });
 });
 
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  let url = changeInfo.url;
+  if (!url) {
+    return;
+  }
+  chrome.contentSettings.javascript.get({primaryUrl: url}, function(jsSetting) {
+    if (jsSetting.setting === "block") {
+      chrome.browserAction.setIcon({
+        path: "images/get_started32.png",
+        tabId: tabId,
+      });
+    } else {
+      chrome.browserAction.setIcon({
+        path: "images/rubberduck32.jpg",
+        tabId: tabId,
+      });
+    }
+  });
+});
+
 const httpsIfy = (url) => "https://*." + url + "/*";
 
 const httpIfy = (url) => "http://*." + url + "/*";
