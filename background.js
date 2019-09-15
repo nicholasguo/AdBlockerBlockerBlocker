@@ -10,14 +10,18 @@
 chrome.runtime.onMessage.addListener(
   async (request, sender, sendResponse) => {
     if (request.message === "block")
-      await chrome.contentSettings.javascript.set({primaryPattern: request.url, setting: "block"});
+      await chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(request.url), secondaryPattern: httpIfy(request.url), setting: "block"});
     else if (request.message === "allow")
-      await chrome.contentSettings.javascript.set({primaryPattern: request.url, setting: "allow"});
+      await chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(request.url), secondaryPattern: httpIfy(request.url), setting: "allow"});
     sendResponse({message: request.message + " echo"});
   }
-)
+);
 
 chrome.storage.sync.get('urlBlacklist', function(result) {
   let list = result.urlBlacklist || [];
-  list.forEach(element => chrome.contentSettings.javascript.set({primaryPattern: element, setting: "block"}));
+  list.forEach(element => chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(element), secondaryPattern: httpIfy(request.url), setting: "block"}));
 });
+
+const httpsIfy = (url) => "https://*." + url + "/*";
+
+const httpIfy = (url) => "http://*." + url + "/*";

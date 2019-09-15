@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 $('#submitter').on("click", function() {
-    let newUrl = "https://*." + $('#input').val() + "/*";
+    let newUrl = $('#input').val();
     chrome.runtime.sendMessage({message: "block", url: newUrl}, response => console.log(response));
     $('#input').val("");
     chrome.storage.sync.get('urlBlacklist', function(result) {
@@ -20,13 +20,12 @@ updateList = () => {
         let list = result.urlBlacklist || [];
         $('#urlBlacklist').empty();
         list.forEach(element => {
-            let url = element.substring(10, element.length - 2);
             let x = document.createElement("BUTTON");
             x.classList.add("delete");
             x.innerHTML = "&times;";
             x.onclick = removeItem(element);
             let node = document.createElement("li");
-            node.appendChild(document.createTextNode(url));
+            node.appendChild(document.createTextNode(element));
             node.appendChild(x);
             $('#urlBlacklist').append(node);
         });
