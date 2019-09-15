@@ -21,7 +21,6 @@ updateList = () => {
     chrome.storage.sync.get('urlBlacklist', function(result) {
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
             let url = tabs[0].url;
-            let isActive = false;
             let list = result.urlBlacklist || [];
             $('#urlBlacklist').empty();
             list.forEach(element => {
@@ -33,16 +32,14 @@ updateList = () => {
                 node.appendChild(document.createTextNode(element));
                 node.appendChild(x);
                 $('#urlBlacklist').append(node);
-                // check for activity
-                if (url.match(httpsIfy(element)) || url.match(httpIfy(element))) {
-                    isActive = true;
+            });
+            chrome.contentSettings.javascript.get({primaryUrl: url}, function(jsSetting) {
+                if (jsSetting.setting === "block") {
+                    $('#status-circle')[0].classList.add("active-circle");
+                } else {
+                    $('#status-circle')[0].classList.remove("active-circle");
                 }
             });
-            if (isActive) {
-                $('#status-circle')[0].classList.add("active-circle");
-            } else {
-                $('#status-circle')[0].classList.remove("active-circle");
-            }
         });
     });
 }
