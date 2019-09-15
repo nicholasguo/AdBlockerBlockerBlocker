@@ -9,11 +9,13 @@
 const defaults = [
   "bloomberg.com",
   "bostonglobe.com",
+  "businessinsider.com",
   "economist.com", 
   "forbes.com",
   "medium.com",
   "newyorker.com",
   "nytimes.com", 
+  "techcrunch.com",
   "washingtonpost.com", 
 ];
 
