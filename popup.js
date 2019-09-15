@@ -12,11 +12,13 @@ $('#submitter').on("click", function() {
     chrome.storage.sync.get('urlBlacklist', function(result) {
         console.log(result)
         let curUrlList = result.urlBlacklist || [];
-        curUrlList.push(newUrl);
-        curUrlList.sort();
-        chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
-            updateList();
-        });
+        if (curUrlList.indexOf(newUrl) === -1) {
+            curUrlList.push(newUrl);
+            curUrlList.sort();
+            chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
+                updateList();
+            });
+        }
     });
 });
 
