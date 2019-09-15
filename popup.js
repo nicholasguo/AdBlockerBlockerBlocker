@@ -8,10 +8,12 @@ $('#submitter').on("click", function() {
     $('#input').val("");
     chrome.storage.sync.get('urlBlacklist', function(result) {
         let curUrlList = result.urlBlacklist || [];
-        curUrlList.push(newUrl);
-        chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
-            updateList();
-        });
+        if (curUrlList.indexOf(newUrl) === -1) {
+            curUrlList.push(newUrl);
+            chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
+                updateList();
+            });
+        }
     });
 });
 
