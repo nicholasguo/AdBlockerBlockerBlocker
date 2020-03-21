@@ -38,7 +38,7 @@
         border-radius: 4px;
       }
       
-      #blacklist {
+      .blacklistbtn {
         border: 2px solid #7180B9;
         color: #7180B9;
         text-decoration: none;
@@ -49,7 +49,7 @@
         border-radius: 4px;
       }
 
-      #blacklist:hover {
+      .blacklistbtn:hover {
         border: 2px solid #141B41;
         color:white;
         background-color: #141B41;
@@ -148,7 +148,8 @@
       <input type="text" id="input" placeholder="Enter website url to blacklist"></input>
       <input type="submit" id="submitter" style="float: right"></input>
     </div>
-    <button id="blacklist">Blacklist This Site</button>
+    <button class="blacklistbtn" id="blacklist">Blacklist This Site</button>
+    <button class="blacklistbtn" id="whitelist">Whitelist This Site</button>
     <p class="text-values">Blacklisted websites</p>
     <div id="urlBlacklist" ></div>
     <script src="popup.js"></script>

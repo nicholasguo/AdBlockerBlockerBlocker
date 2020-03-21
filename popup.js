@@ -31,6 +31,17 @@ addUrl = (newUrl, callback) => {
     });
 }
 
+removeItem = (url, callback) => {
+    chrome.runtime.sendMessage({message: "allow", url: url});
+    chrome.storage.sync.get('urlBlacklist', function(result) {
+        let curUrlList = result.urlBlacklist || [];
+        curUrlList = curUrlList.filter(item => item !== url);
+        chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
+            callback();
+        });
+    });
+}
+
 $('#submitter').on("click", function() {
     let newUrl = $('#input').val().trim();
     if (newUrl === "") {
@@ -45,16 +56,32 @@ $('#blacklist').on("click", function() {
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
         var curUrl = tabs[0].url;
         if (curUrl) {
-            let i = curUrl.lastIndexOf(".");
-            let j = i;
+            let i = curUrl.lastIndexOf("//") + 2;
+            let j = i
             while (j < curUrl.length && curUrl.charAt(j) !== '/' ) {
                 j += 1;
             }
-            let k = i - 1;
-            while (k >= 0 && curUrl.charAt(k) != '.' && curUrl.charAt(k) != '/') {
-                k -= 1;
+            addUrl(curUrl.substring(i, j), function() {
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                    chrome.tabs.update(tabs[0].id, {url: tabs[0].url}, function() {
+                        updateList();
+                    });
+                });
+            });
+        }
+    });
+});
+
+$('#whitelist').on("click", function() {
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+        var curUrl = tabs[0].url;
+        if (curUrl) {
+            let i = curUrl.lastIndexOf("//") + 2;
+            let j = i
+            while (j < curUrl.length && curUrl.charAt(j) !== '/' ) {
+                j += 1;
             }
-            addUrl(curUrl.substring(k + 1, j), function() {
+            removeItem(curUrl.substring(i, j), function() {
                 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     chrome.tabs.update(tabs[0].id, {url: tabs[0].url}, function() {
                         updateList();
@@ -77,7 +104,7 @@ updateList = () => {
             let x = document.createElement("BUTTON");
             x.classList.add("delete");
             x.innerHTML = "&times;";
-            x.onclick = removeItem(element);
+            x.onclick = function() {removeItem(element, updateList);};
             let node = document.createElement("div");
             node.classList.add("urlListItem")
             node.appendChild(document.createTextNode(element));
@@ -90,20 +117,15 @@ updateList = () => {
         chrome.contentSettings.javascript.get({primaryUrl: url}, function(jsSetting) {
             if (jsSetting.setting === "block") {
                 $('#status-circle')[0].classList.add("active-circle");
+                $('#blacklist')[0].style.display = "none";
+                $('#whitelist')[0].style.display = "";
+                chrome.browserAction.setBadgeText({text: "ON", tabId: tabs[0].tabId});
             } else {
                 $('#status-circle')[0].classList.remove("active-circle");
+                $('#blacklist')[0].style.display = "";
+                $('#whitelist')[0].style.display = "none";
+                chrome.browserAction.setBadgeText({text: "", tabId: tabs[0].tabId});
             }
-        });
-    });
-}
-
-removeItem = (url) => () => {
-    chrome.runtime.sendMessage({message: "allow", url: url}); 
-    chrome.storage.sync.get('urlBlacklist', function(result) {
-        let curUrlList = result.urlBlacklist || [];
-        curUrlList = curUrlList.filter(item => item !== url);
-        chrome.storage.sync.set({'urlBlacklist': curUrlList}, function() {
-            updateList();
         });
     });
 }
