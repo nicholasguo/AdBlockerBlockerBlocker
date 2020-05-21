@@ -43,19 +43,20 @@ chrome.storage.sync.get('urlBlacklist', function(result) {
   list.forEach(element => { block(element) });
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  let url = changeInfo.url;
-  if (!url) {
-    return;
-  }
-  chrome.contentSettings.javascript.get({primaryUrl: url}, function(jsSetting) {
-    if (jsSetting.setting === "block") {
-      chrome.browserAction.setBadgeText({text: "ON", tabId: tabId});
-    } else {
-      chrome.browserAction.setBadgeText({text: "", tabId: tabId});
-    }
-  });
-});
+// chrome.tabs.onActivated.addListener(function(activeInfo) { // TRY TO USE ACTIVE TABS INSTEAD
+//   let tabId = activeInfo.tabId;
+//   console.log(activeInfo)
+//   chrome.tabs.get(tabId, function(tab){
+//     console.log(tab)
+//     chrome.contentSettings.javascript.get({primaryUrl: tab.url}, function(jsSetting) {
+//       if (jsSetting.setting === "block") {
+//         chrome.browserAction.setBadgeText({text: "ON", tabId: tabId});
+//       } else {
+//         chrome.browserAction.setBadgeText({text: "", tabId: tabId});
+//       }
+//     });
+//  });
+// });
 
 const httpsIfy = (url) => "https://*." + url + "/*";
 

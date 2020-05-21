@@ -2,7 +2,7 @@
     "name": "AdBlockerBlockerBlocker",
     "version": "1.0",
     "description": "Blacklist certain websites to block javascript from running",
-    "permissions": ["activeTab", "contentSettings", "declarativeContent", "storage", "tabs"],
+    "permissions": ["activeTab", "contentSettings", "storage"],
     "background": {
         "scripts": ["background.js"],
         "persistent": true

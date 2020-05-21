@@ -62,11 +62,8 @@ $('#blacklist').on("click", function() {
                 j += 1;
             }
             addUrl(curUrl.substring(i, j), function() {
-                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                    chrome.tabs.update(tabs[0].id, {url: tabs[0].url}, function() {
-                        updateList();
-                    });
-                });
+                chrome.tabs.reload();
+                updateList();
             });
         }
     });
@@ -82,11 +79,8 @@ $('#whitelist').on("click", function() {
                 j += 1;
             }
             removeItem(curUrl.substring(i, j), function() {
-                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                    chrome.tabs.update(tabs[0].id, {url: tabs[0].url}, function() {
-                        updateList();
-                    });
-                });
+                chrome.tabs.reload();
+                updateList();
             });
         }
     });
@@ -119,12 +113,12 @@ updateList = () => {
                 $('#status-circle')[0].classList.add("active-circle");
                 $('#blacklist')[0].style.display = "none";
                 $('#whitelist')[0].style.display = "";
-                chrome.browserAction.setBadgeText({text: "ON", tabId: tabs[0].tabId});
+                // chrome.browserAction.setBadgeText({text: "ON", tabId: tabs[0].tabId});
             } else {
                 $('#status-circle')[0].classList.remove("active-circle");
                 $('#blacklist')[0].style.display = "";
                 $('#whitelist')[0].style.display = "none";
-                chrome.browserAction.setBadgeText({text: "", tabId: tabs[0].tabId});
+                // chrome.browserAction.setBadgeText({text: "", tabId: tabs[0].tabId});
             }
         });
     });
