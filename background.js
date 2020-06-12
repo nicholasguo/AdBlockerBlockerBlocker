@@ -22,10 +22,14 @@ const defaults = [
 const block = (url) => { 
   chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "block"}); 
   chrome.contentSettings.javascript.set({primaryPattern: httpIfy(url), setting: "block"}); 
+  chrome.contentSettings.cookies.set({primaryPattern: httpsIfy(url), setting: "block"}); 
+  chrome.contentSettings.cookies.set({primaryPattern: httpIfy(url), setting: "block"}); 
 };
 const allow = (url) => { 
   chrome.contentSettings.javascript.set({primaryPattern: httpsIfy(url), setting: "allow"}); 
   chrome.contentSettings.javascript.set({primaryPattern: httpIfy(url), setting: "allow"}); 
+  chrome.contentSettings.cookies.set({primaryPattern: httpsIfy(url), setting: "allow"}); 
+  chrome.contentSettings.cookies.set({primaryPattern: httpIfy(url), setting: "allow"}); 
 };
 
 chrome.runtime.onMessage.addListener(
