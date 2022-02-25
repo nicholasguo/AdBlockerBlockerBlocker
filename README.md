@@ -1,3 +1,3 @@
 # AdBlockerBlockerBlocker
 
-Disable anti Adblocker software on websites. Project for HackMIT 2019.
+Chrome extension that disables anti Adblocker software on websites. Project for HackMIT 2019.
